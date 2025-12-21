@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <title>Спортивный комплекс</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+  <h1>Панель спорткомплекса</h1>
+
+  <section>
+    <h2>Клиенты</h2>
+    <button id="loadClients">Загрузить клиентов</button>
+    <ul id="clientsList"></ul>
+  </section>
+
+  <section>
+    <h2>Расписание</h2>
+    <button id="loadSessions">Загрузить занятия</button>
+    <ul id="sessionsList"></ul>
+  </section>
+
+  <section>
+    <h2>Записать клиента</h2>
+    <form id="bookingForm">
+      <input type="number" name="client_id" placeholder="client_id" required />
+      <input type="number" name="session_id" placeholder="session_id" required />
+      <button type="submit">Записать</button>
+    </form>
+    <div id="bookingResult"></div>
+  </section>
+
+  <script src="app.js"></script>
+</body>
+</html>
