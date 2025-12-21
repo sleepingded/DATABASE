@@ -9,4 +9,8 @@ router.post('/', controller.createBooking);
 router.put('/:id/status', controller.updateBookingStatus);
 router.delete('/:id', controller.removeBooking);
 
+// routes/bookingRouter.js — дополнение
+router.put('/:id/status', controller.updateBookingStatus);
+
+
 module.exports = router;

@@ -11,7 +11,7 @@ const login = async (req, res) => {
 
   try {
     const result = await pool.query(
-      'select user_id, username, password_hash, role from sport.app_user where username = $1',
+      'select user_id, username, password_hash, role from app_user where username = $1',
       [username]
     );
 
@@ -52,4 +52,18 @@ const me = (req, res) => {
   res.json({ username: user.username, role: user.role });
 };
 
-module.exports = { login, me };
+// controllers/userController.js — дополнение
+const getProfile = (req, res) => {
+  if (!req.user) {
+    return res.status(401).json({ error: 'Not authorized' });
+  }
+  res.json({
+    username: req.user.username,
+    role: req.user.role,
+    message: `Welcome, ${req.user.username}! Role: ${req.user.role}`
+  });
+};
+
+// в module.exports добавьте:
+module.exports = { login, me, getProfile };
+
