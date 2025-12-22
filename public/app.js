@@ -131,6 +131,108 @@ document.getElementById('logoutBtn').onclick = () => {
   window.location.href = '/login';
 };
 
+// ИСПРАВЛЕННАЯ версия addClient
+document.getElementById('addClientForm').onsubmit = async (e) => {
+  e.preventDefault();
+  
+  const fullName = document.getElementById('clientFullName').value.trim();
+  const phone = document.getElementById('clientPhone').value.trim();
+  const birthDate = document.getElementById('clientBirthDate').value || null;
+  
+  if (!fullName || !phone) {
+    showErrorForClient('ФИО и телефон обязательны');
+    return;
+  }
+  
+  try {
+    const res = await fetch('/api/clients', {
+      method: 'POST',
+      headers: { 
+        'Content-Type': 'application/json',
+        // Добавляем credentials для cookie (если авторизация)
+        'credentials': 'include'
+      },
+      body: JSON.stringify({ full_name: fullName, phone, birth_date: birthDate })
+    });
+    
+    // Читаем ответ как текст ВСЕГДА (даже при ошибках)
+    const text = await res.text();
+    
+    console.log('Response status:', res.status, 'Response text:', text);
+    
+    if (res.ok) {
+      showSuccessForClient(`Клиент добавлен!`);
+      document.getElementById('addClientForm').reset();
+      document.getElementById('loadClients').click();
+    } else {
+      // Парсим JSON если возможно, иначе показываем текст
+      let errorMsg = text;
+      try {
+        const json = JSON.parse(text);
+        errorMsg = json.error || json.message || text;
+      } catch(e) {}
+      showErrorForClient(errorMsg);
+    }
+  } catch (error) {
+    console.error('Fetch error:', error);
+    showErrorForClient(`Сетевая ошибка: ${error.message}`);
+  }
+};
+
+
+// ДОБАВИТЬ: Удаление клиента
+function deleteClient(clientId) {
+  if (!confirm(`Удалить клиента ${clientId}?`)) return;
+  
+  fetch(`/api/clients/${clientId}`, { method: 'DELETE' })
+    .then(res => res.text())
+    .then(text => {
+      if (res.ok) {
+        showSuccessForClient(`Клиент ${clientId} удалён`);
+        document.getElementById('loadClients').click(); // обновить список
+      } else {
+        showErrorForClient(text);
+      }
+    })
+    .catch(e => showErrorForClient(e.message));
+}
+
+// ДОБАВИТЬ: Показ результатов для клиентов
+const showSuccessForClient = (msg) => {
+  const el = document.getElementById('clientResult');
+  el.textContent = `✅ ${msg}`;
+  el.style.color = 'green';
+  setTimeout(() => el.textContent = '', 3000);
+};
+
+const showErrorForClient = (msg) => {
+  const el = document.getElementById('clientResult');
+  el.textContent = `❌ ${msg}`;
+  el.style.color = 'red';
+  setTimeout(() => el.textContent = '', 5000);
+};
+
+// ИЗМЕНИТЬ: loadClients — добавить кнопки удаления
+document.getElementById('loadClients').onclick = async () => {
+  try {
+    const res = await fetch('/api/clients');
+    const data = await res.json();
+    const list = document.getElementById('clientsList');
+    list.innerHTML = data.map(c => 
+      `<li style="display: flex; justify-content: space-between; align-items: center;">
+        <span>${c.client_id}: ${c.full_name} (${c.phone})</span>
+        <button onclick="deleteClient(${c.client_id})" 
+                style="background: #dc3545; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;">
+          ❌ Удалить
+        </button>
+      </li>`
+    ).join('');
+  } catch (e) {
+    showErrorForClient(e.message);
+  }
+};
+
+
 // Автозагрузка при старте
 window.onload = () => {
   checkAuth();

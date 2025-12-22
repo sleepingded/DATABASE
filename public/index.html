@@ -13,10 +13,21 @@
   </header>
 
   <section id="clientsSection">
-    <h2>👥 Клиенты</h2>
-    <button id="loadClients">Загрузить клиентов</button>
-    <ul id="clientsList"></ul>
-  </section>
+  <h2>👥 Клиенты</h2>
+  
+  <!-- НОВАЯ ФОРМА ДОБАВЛЕНИЯ -->
+  <form id="addClientForm" style="margin-bottom: 20px;">
+    <input type="text" id="clientFullName" placeholder="ФИО" required style="width: 30%; margin-right: 10px;" />
+    <input type="text" id="clientPhone" placeholder="Телефон" required style="width: 25%; margin-right: 10px;" />
+    <input type="date" id="clientBirthDate" style="width: 20%; margin-right: 10px;" />
+    <button type="submit">➕ Добавить</button>
+  </form>
+  <div id="clientResult"></div>
+  
+  <button id="loadClients">🔄 Загрузить клиентов</button>
+  <ul id="clientsList"></ul>
+</section>
+
 
   <section id="sessionsSection">
     <h2>📅 Расписание</h2>
