@@ -13,36 +13,36 @@
   </header>
 
   <section id="clientsSection">
-  <h2>👥 Клиенты</h2>
+  <h2>Клиенты</h2>
   
   <!-- НОВАЯ ФОРМА ДОБАВЛЕНИЯ -->
   <form id="addClientForm" style="margin-bottom: 20px;">
     <input type="text" id="clientFullName" placeholder="ФИО" required style="width: 30%; margin-right: 10px;" />
     <input type="text" id="clientPhone" placeholder="Телефон" required style="width: 25%; margin-right: 10px;" />
     <input type="date" id="clientBirthDate" style="width: 20%; margin-right: 10px;" />
-    <button type="submit">➕ Добавить</button>
+    <button type="submit">Добавить</button>
   </form>
   <div id="clientResult"></div>
   
-  <button id="loadClients">🔄 Загрузить клиентов</button>
+  <button id="loadClients">Загрузить клиентов</button>
   <ul id="clientsList"></ul>
 </section>
 
 
   <section id="sessionsSection">
-    <h2>📅 Расписание</h2>
+    <h2>Расписание</h2>
     <button id="loadSessions">Загрузить занятия</button>
     <ul id="sessionsList"></ul>
   </section>
 
   <section id="bookingsSection">
-    <h2>📋 Брони</h2>
+    <h2>Брони</h2>
     <button id="loadBookings">Загрузить брони</button>
     <ul id="bookingsList"></ul>
   </section>
 
   <section id="bookingSection">
-    <h2>➕ Новая запись</h2>
+    <h2>Новая запись</h2>
     <form id="bookingForm">
       <input type="number" name="client_id" placeholder="ID клиента" required />
       <input type="number" name="session_id" placeholder="ID занятия" required />
@@ -52,7 +52,7 @@
   </section>
 
   <section id="adminSection" style="display:none;">
-    <h2>⚙️ Админ-панель (только для admin)</h2>
+    <h2>Админ-панель (только для admin)</h2>
     <form id="changeStatusForm">
       <input type="number" name="booking_id" placeholder="ID брони" required />
       <select name="status">
